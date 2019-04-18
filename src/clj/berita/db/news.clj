@@ -11,3 +11,11 @@
 
 (defn create-news! [params]
   (jdbc/execute! db-conn (insert-news-sql params)))
+
+(defn select-where [where-clause]
+  (sql/format {:select [:id :title :image_url :category :source_url :source_name :published_at]
+               :from [:news]
+               :where where-clause}))
+
+(defn get-by-id [news-id]
+  (jdbc/query db-conn (select-where [:= :id news-id])))
