@@ -1,6 +1,5 @@
 (ns berita.routes.api
   (:require [struct.core :as st]
-            [berita.middleware :as middleware]
             [ring.util.http-response :refer [ok] :as response]))
 
 (defn receive-webhook [req]
