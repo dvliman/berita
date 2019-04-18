@@ -29,7 +29,7 @@
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
       wrap-auth
-      ;; wrap-keyword-params
+      wrap-keyword-params
       wrap-json-params
       wrap-json-response
       (wrap-defaults

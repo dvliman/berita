@@ -12,13 +12,6 @@
 (defn validate-news [news]
   (first (st/validate news news-schema)))
 
-(defn debug [params]
-  (if-let [response (merge {:id (first (repo/create-news! params))} params)]
-    (do (println "got to here")
-        (println params)
-        (println response))
-    {:ok "fine"}))
-
 (defn create-news [{:keys [params]}]
   (if-let [errors (validate-news params)]
     {:status  400
@@ -26,12 +19,9 @@
      :body    {:errors errors}}
     {:status  200
      :headers {}
-     :body    (debug params)})
-
-  (defn delete-news [news-id]))
+     :body    (merge {:id (first (repo/create-news! params))} params)}))
 
 (defn api-routes []
   [""
-   {:middleware {}}
    ["/news/create-news" {:post create-news}]
-   ["/news/delete-news" {:post delete-news}]])
+   ["/news/delete-news" {:post create-news}]])
