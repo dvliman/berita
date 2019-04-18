@@ -10,18 +10,14 @@
   (:import org.postgresql.util.PGobject
            java.sql.Array
            clojure.lang.IPersistentMap
-           clojure.lang.IPersistentVector
-           ))
-(defstate ^:dynamic *db*
+           clojure.lang.IPersistentVector))
+(defstate ^:dynamic db-conn
   :start (if-let [jdbc-url (env :database-url)]
            (conman/connect! {:jdbc-url jdbc-url})
            (do
              (log/warn "database connection URL was not found, please set :database-url in your config, e.g: dev-config.edn")
-             *db*))
-  :stop (conman/disconnect! *db*))
-
-(conman/bind-connection *db* "sql/queries.sql")
-
+             db-conn))
+  :stop (conman/disconnect! db-conn))
 
 (extend-protocol jdbc/IResultSetReadColumn
     java.sql.Timestamp

@@ -1,14 +1,13 @@
 (ns berita.db.news
-  (:require [berita.db.core :refer [*db*]]
+  (:require [berita.db.core :refer [db-conn]]
             [clojure.java.jdbc :as jdbc]
-            [honeysql.core :as sql]))
+            [honeysql.core :as sql]
+            [honeysql.helpers :as helpers]))
 
-(defn create-query [news]
-  (-> (insert-into :news)
-      (values [news])
+(defn insert-news-sql [params]
+  (-> (helpers/insert-into :news)
+      (helpers/values [params])
       (sql/format)))
 
-(defn create! [news]
-  (jdbc/execute! *db* (create-query news)))
-
-(defn query [category])
+(defn create-news! [params]
+  (jdbc/execute! db-conn (insert-news-sql params)))

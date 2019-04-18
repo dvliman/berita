@@ -1,6 +1,6 @@
 (ns berita.test.db.core
   (:require
-    [berita.db.core :refer [*db*] :as db]
+    [berita.db.core :refer [db-conn] :as db]
     [luminus-migrations.core :as migrations]
     [clojure.test :refer :all]
     [clojure.java.jdbc :as jdbc]
@@ -12,12 +12,12 @@
   (fn [f]
     (mount/start
       #'berita.config/env
-      #'berita.db.core/*db*)
+      #'berita.db.core/db-conn)
     (migrations/migrate ["migrate"] (select-keys env [:database-url]))
     (f)))
 
 (deftest test-users
-  (jdbc/with-db-transaction [t-conn *db*]
+  (jdbc/with-db-transaction [t-conn db-conn]
     (jdbc/db-set-rollback-only! t-conn)
     (is (= 1 (db/create-user!
                t-conn

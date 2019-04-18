@@ -4,6 +4,6 @@ CREATE TABLE news (
        image_url    TEXT,
        category     TEXT,
        source_url   TEXT,
-       sourc_name   TEXT,
+       source_name  TEXT,
        published_at TIMESTAMP
 );

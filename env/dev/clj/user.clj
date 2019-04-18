@@ -22,10 +22,10 @@
   (start))
 
 (defn restart-db []
-  (mount/stop #'berita.db.core/*db*)
-  (mount/start #'berita.db.core/*db*)
+  (mount/stop #'berita.db.core/db-conn)
+  (mount/start #'berita.db.core/db-conn)
   (binding [*ns* 'berita.db.core]
-    (conman/bind-connection berita.db.core/*db* "sql/queries.sql")))
+    (conman/bind-connection berita.db.core/db-conn "sql/queries.sql")))
 
 (defn reset-db []
   (migrations/migrate ["reset"] (select-keys env [:database-url])))

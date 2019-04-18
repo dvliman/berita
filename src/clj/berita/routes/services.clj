@@ -9,8 +9,7 @@
     [reitit.ring.middleware.parameters :as parameters]
     [berita.middleware.formats :as formats]
     [berita.middleware.exception :as exception]
-    [ring.util.http-response :refer :all]
-    [clojure.java.io :as io]))
+    [ring.util.http-response :refer :all]))
 
 (defn service-routes []
   ["/api"
