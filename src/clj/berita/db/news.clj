@@ -12,18 +12,19 @@
 (defn create-news! [params]
   (jdbc/execute! db-conn (insert-news-sql params)))
 
-(defn select-where [where-clause]
-  (sql/format {:select [:id :title :image_url :category :source_url :source_name :published_at]
-               :from   [:news]
-               :where  where-clause}))
-
 (defn select-news [& sqlmaps]
   (sql/format (merge
                 {:select [:id :title :image_url :category
                           :source_url :source_name :published_at]
-                 :from   [:news]}
+                 :from   [:news]
+                 :order-by [[:published_at :desc]]}
                 sqlmaps)))
 
-(defn get-by-id [news-id]
-  (jdbc/query db-conn (select-news {:where [:= :id news-id]})))
+(defn news-by-id [news-id]
+  (jdbc/query db-conn (select-news {:where [:= :id news-id]
+                                    :limit 1})))
+
+;; {:k :v} becomes [:= :k :v]
+(defn query-news [query]
+  )
 

@@ -24,10 +24,10 @@
      :body    (merge {:id (first (repo/create-news! params))} params)}))
 
 (defn fetch-news [{:keys [params]}]
-  (response/ok (repo/get-by-id (:id params))))
+  (response/ok (repo/news-by-id (:id params))))
 
 (defn query-news [{:keys [params]}]
-  (response/ok (repo/get-by-id (:id params))))
+  (response/ok (repo/news-by-id (:id params))))
 
 (defn api-routes []
   [""
