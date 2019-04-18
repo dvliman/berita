@@ -26,8 +26,12 @@
 (defn fetch-news [{:keys [params]}]
   (response/ok (repo/get-by-id (:id params))))
 
+(defn query-news [{:keys [params]}]
+  (response/ok (repo/get-by-id (:id params))))
+
 (defn api-routes []
   [""
+   ["/news/query-news" {:post query-news}]
    ["/news/fetch-news" {:post fetch-news}]
    ["/news/create-news" {:post create-news}]
    ["/news/delete-news" {:post create-news}]])
