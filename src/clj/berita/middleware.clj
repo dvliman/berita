@@ -4,6 +4,7 @@
     [berita.config :refer [env]]
     [ring-ttl-session.core :refer [ttl-memory-store]]
     [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+    [ring.middleware.format :refer [wrap-authentication]]
     [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]
@@ -18,6 +19,7 @@
   (restrict handler {:handler authenticated?
                      :on-error on-error}))
 
+(defn afew)
 (defn wrap-auth [handler]
   (let [backend (session-backend)]
     (-> handler

@@ -2,6 +2,7 @@
   (:require
     [berita.middleware :as middleware]
     [berita.routes.services :refer [service-routes]]
+    [berita.routes.api :refer [api-routes]]
     [reitit.swagger-ui :as swagger-ui]
     [reitit.ring :as ring]
     [ring.middleware.content-type :refer [wrap-content-type]]
@@ -20,7 +21,8 @@
       (ring/router
         [["/" {:get
                {:handler (constantly {:status 301 :headers {"Location" "/api/api-docs/index.html"}})}}]
-         (service-routes)])
+         (service-routes)
+         (api-routes)])
       (ring/routes
         (ring/create-resource-handler
           {:path "/"})
