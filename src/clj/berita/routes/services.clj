@@ -15,23 +15,15 @@
   ["/api"
    {:coercion spec-coercion/coercion
     :muuntaja formats/instance
-    :swagger {:id ::api}
-    :middleware [;; query-params & form-params
-                 parameters/parameters-middleware
-                 ;; content-negotiation
-                 muuntaja/format-negotiate-middleware
-                 ;; encoding response body
-                 muuntaja/format-response-middleware
-                 ;; exception handling
-                 exception/exception-middleware
-                 ;; decoding request body
-                 muuntaja/format-request-middleware
-                 ;; coercing response bodys
-                 coercion/coerce-response-middleware
-                 ;; coercing request parameters
-                 coercion/coerce-request-middleware
-                 ;; multipart
-                 multipart/multipart-middleware]}
+   :swagger {:id ::api}
+   :middleware [parameters/parameters-middleware
+                muuntaja/format-negotiate-middleware
+                muuntaja/format-response-middleware
+                exception/exception-middleware
+                muuntaja/format-request-middleware
+                coercion/coerce-response-middleware
+                coercion/coerce-request-middleware
+                multipart/multipart-middleware]}
 
    ;; swagger documentation
    ["" {:no-doc false

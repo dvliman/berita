@@ -20,7 +20,7 @@
   :stop (conman/disconnect! db-conn))
 
 (extend-protocol jdbc/IResultSetReadColumn
-    java.sql.Timestamp
+  java.sql.Timestamp
   (result-set-read-column [v _2 _3]
     (.toLocalDateTime v))
   java.sql.Date
