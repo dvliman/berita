@@ -42,6 +42,9 @@
 (defn query-news [{:keys [params]}]
   (ok (repo/query-news params)))
 
+(defn delete-news [{:keys [params]}]
+  (ok (repo/delete-news-by-id (:id params))))
+
 (defn api-routes []
   ["/news"
    {:coercion   spec-coercion/coercion
@@ -58,4 +61,4 @@
    ["/query-news" {:post query-news}]
    ["/fetch-news" {:post fetch-news}]
    ["/create-news" {:post create-news}]
-   ["/delete-news" {:post create-news}]])
+   ["/delete-news" {:post delete-news}]])

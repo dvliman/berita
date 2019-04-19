@@ -35,6 +35,8 @@
   (jdbc/query db-conn (select-news {:where [:= :id news-id]
                                     :limit 1})))
 
+(defn delete-news-by-id [id]
+  (jdbc/delete! db-conn :news  ["id = ?" id]))
 
 ;; {:k1 :v1 :k2 :v2} becomes {:where [:and [:= :k1 :v1] [:= :k2 :v2]]}
 (defn query->where [query]
