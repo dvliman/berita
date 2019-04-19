@@ -38,11 +38,14 @@
 (defn delete-news-by-id [id]
   (jdbc/delete! db-conn :news  ["id = ?" id]))
 
-;; {:k1 :v1 :k2 :v2} becomes {:where [:and [:= :k1 :v1] [:= :k2 :v2]]}
+;; {:k1 :v1 :k2 :v2} -> {:where [:and [:= :k1 :v1] [:= :k2 :v2]]}
 (defn query->where [query]
-  {:where (into [:and] (reduce-kv
-                         (fn [xs k v]
-                           (conj xs [:= k v])) [] query))})
+  (if (empty? query)
+    {}
+    {:where (into [:and]
+                  (reduce-kv
+                    (fn [xs k v]
+                      (conj xs [:= k v])) [] query))}))
 
 (defn query-news [query]
   (jdbc/query db-conn (select-news (query->where query))))
