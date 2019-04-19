@@ -27,14 +27,20 @@
                 {:select [:id :title :image_url :category
                           :source_url :source_name :published_at]
                  :from   [:news]
-                 :order-by [[:published_at :desc]]}
+                 :order-by [[:published_at :desc]]
+                 :limit 50}
                 sqlmap)))
 
 (defn news-by-id [news-id]
   (jdbc/query db-conn (select-news {:where [:= :id news-id]
                                     :limit 1})))
 
-;; {:k :v} becomes [:= :k :v]
-(defn query-news [query]
-  )
 
+;; {:k1 :v1 :k2 :v2} becomes {:where [:and [:= :k1 :v1] [:= :k2 :v2]]}
+(defn query->where [query]
+  {:where (into [:and] (reduce-kv
+                         (fn [xs k v]
+                           (conj xs [:= k v])) [] query))})
+
+(defn query-news [query]
+  (jdbc/query db-conn (select-news (query->where query))))

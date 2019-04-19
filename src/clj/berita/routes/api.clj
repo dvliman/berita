@@ -30,7 +30,7 @@
 (defn create-news [{:keys [params]}]
   (if-let [errors (validate-news params)]
     (bad-request {:error errors})
-    (ok (merge {:id (first (repo/create-news! params))} params))))
+    (ok (merge {:id (first (repo/create-news! params))} params)))) ;; postgres returning id
 
 ;; curl -v -XPOST http://localhost:3000/news/fetch-news -H "Content-Type: application/json" -d '{"id": 4}'
 (defn fetch-news [{:keys [params]}]
@@ -40,7 +40,7 @@
       (ok item))))
 
 (defn query-news [{:keys [params]}]
-  (ok (repo/news-by-id (:id params))))
+  (ok (repo/query-news params)))
 
 (defn api-routes []
   ["/news"
