@@ -19,6 +19,7 @@
   [[:title st/required st/string]
    [:image_url st/required st/string]
    [:category st/required st/string]
+   [:content st/required st/string]
    [:source_url st/required st/string]
    [:source_name st/required st/string]
    [:published_at st/required st/string]])

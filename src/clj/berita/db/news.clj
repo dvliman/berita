@@ -24,7 +24,7 @@
 
 (defn select-news [sqlmap]
   (sql/format (merge
-                {:select [:id :title :image_url :category
+                {:select [:id :title :image_url :category :content
                           :source_url :source_name :published_at]
                  :from   [:news]
                  :order-by [[:published_at :desc]]
